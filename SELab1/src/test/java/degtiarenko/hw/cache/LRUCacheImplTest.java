@@ -88,7 +88,7 @@ public class LRUCacheImplTest {
         namesCache.put(2, "b");
 
         namesCache.get(1);
-        namesCache.put(3, "c");
+        assertEquals(null, namesCache.put(3, "c"));
 
         assertEquals("a", namesCache.get(1));
         assertEquals(null, namesCache.get(2));

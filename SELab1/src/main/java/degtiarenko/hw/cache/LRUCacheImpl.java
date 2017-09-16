@@ -68,9 +68,7 @@ public class LRUCacheImpl<K, V> implements Cache<K, V> {
                 first.setPrevious(resultNode.getPrevious());
             }
         }
-        if (last == resultNode && resultNode.getNext() != null) {
-            last = resultNode.getNext();
-        }
+        correctLast(resultNode);
         resultNode.setNext(null);
         first = resultNode;
     }
@@ -83,15 +81,19 @@ public class LRUCacheImpl<K, V> implements Cache<K, V> {
     }
 
     private void deleteNode(Node oldNode) {
-        if (last == oldNode && oldNode.getNext() != null) {
-            last = oldNode.getNext();
-        }
+        correctLast(oldNode);
         orderNodes(oldNode.getNext(), oldNode.getPrevious());
     }
 
     private void orderNodes(Node first, Node second) {
         second.setNext(first);
         first.setPrevious(second);
+    }
+
+    private void correctLast(Node resultNode) {
+        if (last == resultNode && resultNode.getNext() != null) {
+            last = resultNode.getNext();
+        }
     }
 
     private class Node {

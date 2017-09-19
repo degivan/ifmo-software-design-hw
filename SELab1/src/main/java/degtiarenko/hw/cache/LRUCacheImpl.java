@@ -1,11 +1,9 @@
 package degtiarenko.hw.cache;
 
-import org.contract4j5.contract.Contract;
 
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
-@Contract
 public class LRUCacheImpl<K, V> implements Cache<K, V> {
     private final int maxCashSize;
     private final ConcurrentMap<K, Node> nodes = new ConcurrentHashMap<>();

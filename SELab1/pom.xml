@@ -11,13 +11,7 @@
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
-            <version>RELEASE</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.contract4j5</groupId>
-            <artifactId>contract4j5</artifactId>
-            <version>0.8.0</version>
+            <version>4.11</version>
         </dependency>
     </dependencies>
 

@@ -6,7 +6,6 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
-import java.util.TimeZone;
 
 public class TweetList {
     private final SimpleDateFormat dateFormat = new SimpleDateFormat("EEE MMM d hh:mm:ss ZZZZZ yyyy", Locale.ENGLISH);

@@ -4,13 +4,17 @@ import com.mashape.unirest.http.HttpResponse;
 import com.mashape.unirest.http.JsonNode;
 import com.mashape.unirest.http.Unirest;
 import com.mashape.unirest.http.exceptions.UnirestException;
-import org.json.JSONArray;
+import org.joda.time.DateTime;
+import org.joda.time.Hours;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.Collections;
+import java.text.ParseException;
+import java.util.Comparator;
 import java.util.List;
+import java.util.Map;
 import java.util.Properties;
+import java.util.stream.Collectors;
 
 public class TweetStatisticServiceImpl implements TweetStatisticService {
 
@@ -33,18 +37,25 @@ public class TweetStatisticServiceImpl implements TweetStatisticService {
     }
 
     @Override
-    public List<Integer> getHashTagPopularity(String hashTag, int hours) throws UnirestException {
-        return Collections.singletonList(todayTweetsWithHashTag(hashTag).length());
+    public List<Long> getHashTagPopularity(String hashTag, int hours) throws UnirestException, ParseException {
+        DateTime lastTime = new DateTime().minusHours(hours);
+        Map<Integer, Long> tweetsPerHour = getTweetsWithHashTag(hashTag).stream()
+                .filter(tweet -> tweet.getDate().isAfter(lastTime))
+                .collect(Collectors.groupingBy(tweet -> Hours.hoursBetween(tweet.getDate(), lastTime).getHours(), Collectors.counting()));
+        return tweetsPerHour.entrySet().stream()
+                .sorted(Comparator.comparingInt(Map.Entry::getKey))
+                .map(Map.Entry::getValue)
+                .collect(Collectors.toList());
     }
 
     //actually gets 100 recent tweets now
-    private JSONArray todayTweetsWithHashTag(String hashTag) throws UnirestException {
+    private List<Tweet> getTweetsWithHashTag(String hashTag) throws UnirestException, ParseException {
         HttpResponse<JsonNode> jsonResponse = Unirest.get(SEARCH_URL)
                 .queryString("q", HASHTAG_PREFIX + hashTag)
                 .queryString("result_type", "recent")
                 .queryString("count", "100")
                 .header("Authorization", authValue)
                 .asJson();
-        return jsonResponse.getBody().getObject().getJSONArray("statuses");
+        return new TweetParser().getTweetsFromResponse(jsonResponse);
     }
 }

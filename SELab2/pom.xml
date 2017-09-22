@@ -33,6 +33,11 @@
             <artifactId>json</artifactId>
             <version>20170516</version>
         </dependency>
+        <dependency>
+            <groupId>com.cognifide.securecq</groupId>
+            <artifactId>secure-cq</artifactId>
+            <version>1.0.1</version>
+        </dependency>
     </dependencies>
 
     <build>

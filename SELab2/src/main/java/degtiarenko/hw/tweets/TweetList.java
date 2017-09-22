@@ -14,7 +14,6 @@ public class TweetList {
 
     public TweetList(JSONArray tweets) {
         this.tweets = tweets;
-        dateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
     }
 
     public int getListLength() {

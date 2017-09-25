@@ -10,5 +10,6 @@ public class Main {
         out.println(tweetService.getHashTagPopularity("Ваня", 24));
         out.println(tweetService.getHashTagPopularity("Ксюша", 24));
         out.println(tweetService.getHashTagPopularity("grey", 24));
+        out.println(tweetService.getHashTagPopularity("feminist", 24));
     }
 }

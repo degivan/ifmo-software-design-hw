@@ -10,17 +10,12 @@ import org.joda.time.Hours;
 import java.io.IOException;
 import java.io.InputStream;
 import java.text.ParseException;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Map;
-import java.util.Properties;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class TweetStatisticServiceImpl implements TweetStatisticService {
 
     private static final String AUTH_PREFIX = "Bearer ";
-    private static final String HASHTAG_PREFIX = "%23";
-    private static final String SEARCH_URL = "https://api.twitter.com/1.1/search/tweets.json";
 
     private final String authValue;
 
@@ -39,7 +34,7 @@ public class TweetStatisticServiceImpl implements TweetStatisticService {
     @Override
     public List<Long> getHashTagPopularity(String hashTag, int hours) throws UnirestException, ParseException {
         DateTime lastTime = new DateTime().minusHours(hours);
-        Map<Integer, Long> tweetsPerHour = getTweetsWithHashTag(hashTag).stream()
+        Map<Integer, Long> tweetsPerHour = getTweetsWithHashTag(hashTag, lastTime).stream()
                 .filter(tweet -> tweet.getDate().isAfter(lastTime))
                 .collect(Collectors.groupingBy(tweet -> Hours.hoursBetween(tweet.getDate(), lastTime).getHours(), Collectors.counting()));
         return tweetsPerHour.entrySet().stream()
@@ -49,13 +44,15 @@ public class TweetStatisticServiceImpl implements TweetStatisticService {
     }
 
     //actually gets 100 recent tweets now
-    private List<Tweet> getTweetsWithHashTag(String hashTag) throws UnirestException, ParseException {
-        HttpResponse<JsonNode> jsonResponse = Unirest.get(SEARCH_URL)
-                .queryString("q", HASHTAG_PREFIX + hashTag)
-                .queryString("result_type", "recent")
-                .queryString("count", "100")
-                .header("Authorization", authValue)
-                .asJson();
-        return new TweetParser().getTweetsFromResponse(jsonResponse);
+    private List<Tweet> getTweetsWithHashTag(String hashTag, DateTime since) throws UnirestException, ParseException {
+        DateTime lastTweetTime = new DateTime();
+        TweetWalker tweetWalker = new TweetWalker(hashTag, authValue);
+        List<Tweet> tweets = new ArrayList<>();
+        while (lastTweetTime.isAfter(since)) {
+            List<Tweet> newTweets = tweetWalker.getNextTweets();
+            lastTweetTime = newTweets.get(newTweets.size() - 1).getDate();
+            tweets.addAll(newTweets);
+        }
+        return tweets;
     }
 }

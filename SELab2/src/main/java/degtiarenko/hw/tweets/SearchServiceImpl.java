@@ -7,11 +7,11 @@ import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TweetSearchServiceImpl implements TweetSearchService {
+public class SearchServiceImpl implements SearchService {
     private static final String AUTH_PREFIX = "Bearer ";
     private final String authValue;
 
-    public TweetSearchServiceImpl(String bearerToken) {
+    public SearchServiceImpl(String bearerToken) {
         this.authValue = AUTH_PREFIX + bearerToken;
     }
 

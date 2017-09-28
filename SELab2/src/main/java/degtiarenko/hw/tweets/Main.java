@@ -12,12 +12,12 @@ public class Main {
         InputStream input = ClassLoader.getSystemResourceAsStream("twitter_api.properties");
         prop.load(input);
 
-        TweetSearchService tweetSearchService = new TweetSearchServiceImpl(prop.getProperty("bearer_token"));
-        TweetStatisticService tweetStatisticService = new TweetStatisticServiceImpl(tweetSearchService);
+        SearchService searchService = new SearchServiceImpl(prop.getProperty("bearer_token"));
+        StatisticService statisticService = new StatisticServiceImpl(searchService);
 
-        out.println(tweetStatisticService.getHashTagPopularity("Ваня", 24));
-        out.println(tweetStatisticService.getHashTagPopularity("Ксюша", 24));
-        out.println(tweetStatisticService.getHashTagPopularity("grey", 24));
-        out.println(tweetStatisticService.getHashTagPopularity("feminist", 24));
+        out.println(statisticService.getHashTagPopularity("Ваня", 24));
+        out.println(statisticService.getHashTagPopularity("Ксюша", 24));
+        out.println(statisticService.getHashTagPopularity("grey", 24));
+        out.println(statisticService.getHashTagPopularity("feminist", 24));
     }
 }

@@ -11,18 +11,18 @@ import java.util.Map;
 
 import static java.util.stream.Collectors.*;
 
-public class TweetStatisticServiceImpl implements TweetStatisticService {
+public class StatisticServiceImpl implements StatisticService {
 
-    private final TweetSearchService tweetSearchService;
+    private final SearchService searchService;
 
-    public TweetStatisticServiceImpl(TweetSearchService tweetSearchService) {
-        this.tweetSearchService = tweetSearchService;
+    public StatisticServiceImpl(SearchService searchService) {
+        this.searchService = searchService;
     }
 
     @Override
     public List<Long> getHashTagPopularity(String hashTag, int hours) throws UnirestException, ParseException {
         DateTime lastTime = new DateTime().minusHours(hours);
-        Map<Integer, Long> tweetsPerHour = tweetSearchService.getTweetsWithHashTag(hashTag, lastTime).stream()
+        Map<Integer, Long> tweetsPerHour = searchService.getTweetsWithHashTag(hashTag, lastTime).stream()
                 .filter(tweet -> tweet.getDate().isAfter(lastTime))
                 .collect(groupingBy(tweet -> Hours.hoursBetween(tweet.getDate(), lastTime).getHours(), counting()));
         return tweetsPerHour.entrySet().stream()

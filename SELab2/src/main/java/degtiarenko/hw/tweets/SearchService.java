@@ -6,6 +6,6 @@ import org.joda.time.DateTime;
 import java.text.ParseException;
 import java.util.List;
 
-public interface TweetSearchService {
+public interface SearchService {
     List<Tweet> getTweetsWithHashTag(String hashTag, DateTime since) throws ParseException, UnirestException;
 }

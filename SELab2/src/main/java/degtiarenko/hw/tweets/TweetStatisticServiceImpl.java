@@ -1,8 +1,5 @@
 package degtiarenko.hw.tweets;
 
-import com.mashape.unirest.http.HttpResponse;
-import com.mashape.unirest.http.JsonNode;
-import com.mashape.unirest.http.Unirest;
 import com.mashape.unirest.http.exceptions.UnirestException;
 import org.joda.time.DateTime;
 import org.joda.time.Hours;
@@ -11,7 +8,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.text.ParseException;
 import java.util.*;
-import java.util.stream.Collectors;
+
+import static java.util.stream.Collectors.*;
 
 public class TweetStatisticServiceImpl implements TweetStatisticService {
 
@@ -36,11 +34,11 @@ public class TweetStatisticServiceImpl implements TweetStatisticService {
         DateTime lastTime = new DateTime().minusHours(hours);
         Map<Integer, Long> tweetsPerHour = getTweetsWithHashTag(hashTag, lastTime).stream()
                 .filter(tweet -> tweet.getDate().isAfter(lastTime))
-                .collect(Collectors.groupingBy(tweet -> Hours.hoursBetween(tweet.getDate(), lastTime).getHours(), Collectors.counting()));
+                .collect(groupingBy(tweet -> Hours.hoursBetween(tweet.getDate(), lastTime).getHours(), counting()));
         return tweetsPerHour.entrySet().stream()
                 .sorted(Comparator.comparingInt(Map.Entry::getKey))
                 .map(Map.Entry::getValue)
-                .collect(Collectors.toList());
+                .collect(toList());
     }
 
     //actually gets 100 recent tweets now

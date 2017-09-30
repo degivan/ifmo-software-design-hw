@@ -5,6 +5,7 @@ import com.xebialabs.restito.server.StubServer;
 import org.glassfish.grizzly.http.util.HttpStatus;
 import org.joda.time.DateTime;
 import org.json.JSONException;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -23,13 +24,18 @@ import static org.junit.Assert.fail;
 
 public class SearchServiceTest {
     private static final int PORT = 20362;
-    public static final String SEARCH_URL = "http://localhost:" + PORT;
+    private static final String SEARCH_URL = "http://localhost:" + PORT;
     private StubServer stubServer;
 
     @Before
     public void startStubServer() {
         stubServer = new StubServer(PORT);
         stubServer.start();
+    }
+
+    @After
+    public void stopStubServer() {
+        stubServer.stop();
     }
 
     @Test

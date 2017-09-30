@@ -22,6 +22,9 @@ public class StatisticServiceImpl implements StatisticService {
 
     @Override
     public List<Long> getHashTagPopularity(String hashTag, int hours) throws UnirestException, ParseException {
+        if (hours < 0 || hours > 24) {
+            throw new IllegalArgumentException("Hours should be in range between 0 and 24");
+        }
         List<Long> result = new ArrayList<>();
         DateTime currentTime = new DateTime();
         DateTime lastTime = currentTime.minusHours(hours);

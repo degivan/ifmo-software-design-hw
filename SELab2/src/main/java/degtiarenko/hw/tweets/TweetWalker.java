@@ -9,20 +9,21 @@ import java.util.List;
 
 public class TweetWalker {
     private static final String HASHTAG_PREFIX = "%23";
-    private static final String SEARCH_URL = "https://api.twitter.com/1.1/search/tweets.json";
     private final String hashTag;
     private final String authValue;
+    private final String searchUrl;
     private String lastId = "";
     private final TweetParser parser;
 
-    public TweetWalker(String hashTag, String authValue) {
+    public TweetWalker(String hashTag, String authValue, String searchUrl) {
         this.hashTag = HASHTAG_PREFIX + hashTag;
         this.authValue = authValue;
+        this.searchUrl = searchUrl;
         this.parser = new TweetParser();
     }
 
     public List<Tweet> getNextTweets() throws UnirestException, ParseException {
-        HttpRequest base = Unirest.get(SEARCH_URL)
+        HttpRequest base = Unirest.get(searchUrl)
                 .queryString("q", HASHTAG_PREFIX + hashTag)
                 .queryString("result_type", "recent")
                 .queryString("count", "100")
@@ -31,7 +32,9 @@ public class TweetWalker {
             base = base.queryString("max_id", lastId);
         }
         List<Tweet> tweets = parser.getTweetsFromResponse(base.asJson());
-        lastId = tweets.get(tweets.size() - 1).getId();
+        if (!tweets.isEmpty()) {
+            lastId = tweets.get(tweets.size() - 1).getId();
+        }
         return tweets;
     }
 }

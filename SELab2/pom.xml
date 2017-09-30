@@ -50,6 +50,12 @@
             <version>4.12</version>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>com.xebialabs.restito</groupId>
+            <artifactId>restito</artifactId>
+            <version>0.7</version>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
 
     <build>

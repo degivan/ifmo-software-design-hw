@@ -16,6 +16,7 @@ public final class DBUtil {
                 rs = stmt.executeQuery(sql);
             } else {
                 stmt.executeUpdate(sql);
+                stmt.close();
             }
             return rs;
         }

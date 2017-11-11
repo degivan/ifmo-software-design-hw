@@ -17,16 +17,11 @@ import java.sql.Statement;
  */
 public class Main {
     public static void main(String[] args) throws Exception {
-        try (Connection c = DBUtil.getConnection()) {
-            String sql = "CREATE TABLE IF NOT EXISTS PRODUCT" +
-                    "(ID SERIAL PRIMARY KEY NOT NULL," +
-                    " NAME           TEXT    NOT NULL, " +
-                    " PRICE          INT     NOT NULL)";
-            Statement stmt = c.createStatement();
-
-            stmt.executeUpdate(sql);
-            stmt.close();
-        }
+        String sql = "CREATE TABLE IF NOT EXISTS PRODUCT" +
+                "(ID SERIAL PRIMARY KEY NOT NULL," +
+                " NAME           TEXT    NOT NULL, " +
+                " PRICE          INT     NOT NULL)";
+        DBUtil.executeQuery(sql);
 
         Server server = new Server(8081);
 

@@ -1,16 +1,12 @@
-package ru.akirakozov.sd.refactoring.util;
+package ru.akirakozov.sd.refactoring;
 
 import org.junit.Test;
-import ru.akirakozov.sd.refactoring.ResponseUtil;
 
 import javax.servlet.http.HttpServletResponse;
-
 import java.io.IOException;
 import java.util.ArrayList;
 
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.*;
 
 public class ResponseUtilTest {
     @Test

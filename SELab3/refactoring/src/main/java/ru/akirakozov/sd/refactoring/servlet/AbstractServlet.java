@@ -1,7 +1,7 @@
 package ru.akirakozov.sd.refactoring.servlet;
 
-import ru.akirakozov.sd.refactoring.util.DBUtil;
-import ru.akirakozov.sd.refactoring.util.ResponseUtil;
+import ru.akirakozov.sd.refactoring.DBConnection;
+import ru.akirakozov.sd.refactoring.ResponseUtil;
 
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -12,12 +12,19 @@ import java.sql.SQLException;
 import java.util.List;
 
 public abstract class AbstractServlet extends HttpServlet {
+    protected DBConnection dbConnection;
+
+    public AbstractServlet(DBConnection dbConnection) {
+        super();
+        this.dbConnection = dbConnection;
+    }
+
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         try {
             String sql = getSql(request);
             if (sql != null) {
-                ResultSet rs = DBUtil.executeQuery(sql);
+                ResultSet rs = dbConnection.executeQuery(sql);
                 List<String> values = getValues(rs, request);
                 ResponseUtil.fillResponse(response, values);
                 if (rs != null) {

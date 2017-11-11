@@ -1,5 +1,7 @@
 package ru.akirakozov.sd.refactoring.servlet;
 
+import ru.akirakozov.sd.refactoring.DBConnection;
+
 import javax.servlet.http.HttpServletRequest;
 import java.sql.ResultSet;
 import java.util.ArrayList;
@@ -9,6 +11,10 @@ import java.util.List;
  * @author akirakozov
  */
 public class AddProductServlet extends AbstractServlet {
+
+    public AddProductServlet(DBConnection dbConnection) {
+        super(dbConnection);
+    }
 
     protected List<String> getValues(ResultSet rs, HttpServletRequest request) {
         List<String> values = new ArrayList<>();

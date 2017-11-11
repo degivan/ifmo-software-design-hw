@@ -1,14 +1,14 @@
-package ru.akirakozov.sd.refactoring.util;
+package ru.akirakozov.sd.refactoring;
 
 import java.sql.*;
 import java.util.Properties;
 
-public final class DBUtil {
-    private DBUtil() {
+public class DBConnection {
+    public DBConnection() {
 
     }
 
-    public static ResultSet  executeQuery(String sql) throws SQLException {
+    public ResultSet  executeQuery(String sql) throws SQLException {
         try (Connection c = getConnection()) {
             Statement stmt = c.createStatement();
             ResultSet rs = null;
@@ -22,7 +22,7 @@ public final class DBUtil {
         }
     }
 
-    private static Connection getConnection() throws SQLException {
+    private Connection getConnection() throws SQLException {
         Properties props = new Properties();
         props.setProperty("user", "barter");
         props.setProperty("password", "barter");

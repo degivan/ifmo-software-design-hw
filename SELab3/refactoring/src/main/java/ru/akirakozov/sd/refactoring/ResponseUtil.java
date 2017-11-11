@@ -1,4 +1,4 @@
-package ru.akirakozov.sd.refactoring.util;
+package ru.akirakozov.sd.refactoring;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;

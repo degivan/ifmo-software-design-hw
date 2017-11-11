@@ -1,5 +1,7 @@
 package ru.akirakozov.sd.refactoring.servlet;
 
+import ru.akirakozov.sd.refactoring.DBConnection;
+
 import javax.servlet.http.HttpServletRequest;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -10,6 +12,10 @@ import java.util.List;
  * @author akirakozov
  */
 public class GetProductsServlet extends AbstractServlet {
+
+    public GetProductsServlet(DBConnection dbConnection) {
+        super(dbConnection);
+    }
 
     protected String getSql(HttpServletRequest request) {
         return "SELECT * FROM PRODUCT";

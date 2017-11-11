@@ -1,5 +1,7 @@
 package ru.akirakozov.sd.refactoring.servlet;
 
+import ru.akirakozov.sd.refactoring.DBConnection;
+
 import javax.servlet.http.HttpServletRequest;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -29,6 +31,10 @@ public class QueryServlet extends AbstractServlet {
         retrievers.put("min", minRetriever);
         retrievers.put("sum", sumRetriever);
         retrievers.put("count", countRetriever);
+    }
+
+    public QueryServlet(DBConnection dbConnection) {
+        super(dbConnection);
     }
 
 

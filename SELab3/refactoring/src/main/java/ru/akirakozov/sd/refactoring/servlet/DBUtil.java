@@ -22,7 +22,7 @@ public final class DBUtil {
         }
     }
 
-    public static Connection getConnection() throws SQLException {
+    private static Connection getConnection() throws SQLException {
         Properties props = new Properties();
         props.setProperty("user", "barter");
         props.setProperty("password", "barter");

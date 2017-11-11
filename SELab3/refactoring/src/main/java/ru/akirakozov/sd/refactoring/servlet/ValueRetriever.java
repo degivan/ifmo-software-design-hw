@@ -17,6 +17,7 @@ public abstract class ValueRetriever {
         result.add("<html><body>");
         result.add(name);
         result.addAll(getData(rs));
+        result.add("</body></html>");
         return result;
     }
 

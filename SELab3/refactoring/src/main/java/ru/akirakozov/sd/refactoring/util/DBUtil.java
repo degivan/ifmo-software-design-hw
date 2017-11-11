@@ -1,4 +1,4 @@
-package ru.akirakozov.sd.refactoring.servlet;
+package ru.akirakozov.sd.refactoring.util;
 
 import java.sql.*;
 import java.util.Properties;

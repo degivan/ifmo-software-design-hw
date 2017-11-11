@@ -14,7 +14,13 @@ public class QueryServlet extends AbstractServlet {
     private Map<String, String> queries = new HashMap<>();
     private Map<String, ValueRetriever> retrievers = new HashMap<>();
 
-    {
+
+    public QueryServlet(DBConnection dbConnection) {
+        super(dbConnection);
+        initMappers();
+    }
+
+    private void initMappers() {
         queries.put("max", "SELECT * FROM PRODUCT ORDER BY PRICE DESC LIMIT 1");
         queries.put("min", "SELECT * FROM PRODUCT ORDER BY PRICE LIMIT 1");
         queries.put("sum", "SELECT SUM(price) FROM PRODUCT");
@@ -31,10 +37,6 @@ public class QueryServlet extends AbstractServlet {
         retrievers.put("min", minRetriever);
         retrievers.put("sum", sumRetriever);
         retrievers.put("count", countRetriever);
-    }
-
-    public QueryServlet(DBConnection dbConnection) {
-        super(dbConnection);
     }
 
 

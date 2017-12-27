@@ -18,19 +18,23 @@ public class Operation implements Token {
                 type = OperationType.MINUS;
                 break;
             case '*':
-                type = OperationType.MULTIPLY;
+                type = OperationType.MULT;
                 break;
             default:
-                type = OperationType.DIVIDE;
+                type = OperationType.DIV;
         }
     }
 
     public void accept(TokenVisitor visitor) {
+        visitor.visit(this);
+    }
 
+    public OperationType getType() {
+        return type;
     }
 
     public enum OperationType {
-        PLUS('+'), MINUS('-'), MULTIPLY('*'), DIVIDE('/');
+        PLUS('+'), MINUS('-'), MULT('*'), DIV('/');
 
         OperationType(char symbol) {
             this.symbol = symbol;

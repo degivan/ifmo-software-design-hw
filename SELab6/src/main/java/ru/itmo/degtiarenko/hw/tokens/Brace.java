@@ -20,7 +20,11 @@ public class Brace implements Token {
     }
 
     public void accept(TokenVisitor visitor) {
+        visitor.visit(this);
+    }
 
+    public BraceType getType() {
+        return type;
     }
 
     public enum BraceType {

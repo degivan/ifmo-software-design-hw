@@ -11,7 +11,7 @@ public class NumberToken implements Token {
 
     private final BigInteger number;
 
-    private NumberToken(BigInteger number) {
+    public NumberToken(BigInteger number) {
         this.number = number;
     }
 

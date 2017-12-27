@@ -5,6 +5,10 @@ import ru.itmo.degtiarenko.hw.visitors.TokenVisitor;
 import java.math.BigInteger;
 
 public class NumberToken implements Token {
+    public BigInteger getNumber() {
+        return number;
+    }
+
     private final BigInteger number;
 
     private NumberToken(BigInteger number) {

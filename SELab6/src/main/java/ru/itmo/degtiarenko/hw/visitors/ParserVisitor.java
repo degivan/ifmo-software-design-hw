@@ -54,7 +54,7 @@ public class ParserVisitor implements TokenVisitor {
     private boolean firstElemLessPrior(int prior) {
         final Token token = stack.peek();
         if(token instanceof Operation) {
-            if (priorities.get(((Operation)token).getType()) > prior) {
+            if (priorities.get(((Operation)token).getType()) >= prior) {
                 return false;
             }
         }

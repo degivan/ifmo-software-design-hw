@@ -27,6 +27,7 @@ public class Calculator {
             tokens = parserVisitor.getTokens();
             visitTokens(calcVisitor, tokens);
             visitTokens(printVisitor, tokens);
+            System.out.println();
             System.out.println(calcVisitor.getResult());
         }
     }

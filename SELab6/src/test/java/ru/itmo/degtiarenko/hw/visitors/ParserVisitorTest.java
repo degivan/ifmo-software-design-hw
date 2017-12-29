@@ -32,6 +32,15 @@ public class ParserVisitorTest {
         assertTrue(tokens.get(4) instanceof Operation);
     }
 
+    @Test
+    public void testMinus() {
+        List<Token> tokens = visitExpression("-1-2");
+        assertTrue(tokens.size() == 3);
+        assertTrue(tokens.get(0) instanceof NumberToken);
+        assertTrue(tokens.get(1) instanceof NumberToken);
+        assertTrue(tokens.get(2) instanceof Operation);
+    }
+
 
     private List<Token> visitExpression(String input) {
         Tokenizer tokenizer = new Tokenizer();

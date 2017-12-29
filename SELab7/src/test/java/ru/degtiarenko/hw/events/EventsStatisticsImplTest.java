@@ -35,6 +35,7 @@ public class EventsStatisticsImplTest {
         assertEquals(statistic.getAllEventStatistic(), 60);
         assertEquals(statistic.getEventStatisticByName(event1), 30);
         assertEquals(statistic.getEventStatisticByName(event2), 30);
+        statistic.printStatistic();
     }
 
     @Test

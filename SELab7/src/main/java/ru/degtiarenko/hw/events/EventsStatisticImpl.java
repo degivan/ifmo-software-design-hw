@@ -16,10 +16,6 @@ public class EventsStatisticImpl implements EventsStatistic {
         this.clock = clock;
     }
 
-    public EventsStatisticImpl() {
-        clock = Clock.systemDefaultZone();
-    }
-
     @Override
     public void incEvent(String name) {
         Instant now = clock.instant();

@@ -14,6 +14,7 @@ import java.util.List;
 
 public class Main extends Application {
     private static final int VERTEX_AMOUNT = 17;
+    public static final int WIDTH = 1000;
 
     public static void main(String[] args) {
         if (args.length < 2) {
@@ -64,16 +65,16 @@ public class Main extends Application {
     private static DrawingApi chooseAPI(String api) {
         DrawingApi drawingApi;
         if(api.equals("AWT"))  {
-            drawingApi = new AwtDrawingApi(1000, 1000);
+            drawingApi = new AwtDrawingApi(WIDTH, WIDTH);
         } else {
-            drawingApi = new JavaFXDrawingApi(1000, 1000);
+            drawingApi = new JavaFXDrawingApi(WIDTH, WIDTH);
         }
         return drawingApi;
     }
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        DrawingApi drawingApi = new AwtDrawingApi(1000, 1000);
+        DrawingApi drawingApi = new AwtDrawingApi(WIDTH, WIDTH);
         Graph graph = new MatrixGraph(drawingApi, createMatrix());
         graph.drawGraph();
     }

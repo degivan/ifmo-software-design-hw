@@ -37,7 +37,7 @@
     </table>
 
     <input type="submit" class="button" name="add" value="Add">
-    <input type="submit" class="button" name="delete" value="Delete">
+    <input type="submit" class="button" name="delete" value="Complete">
 </form:form>
 
 <h3>List</h3>

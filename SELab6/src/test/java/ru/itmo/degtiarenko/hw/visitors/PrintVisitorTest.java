@@ -13,6 +13,8 @@ public class PrintVisitorTest {
         visitExpression("(123+456)*13");
         visitExpression("1-2+3*15");
         visitExpression("1+(2-3)*15");
+        visitExpression("-1+2");
+        visitExpression("3*(-1+2)");
     }
 
     private void visitExpression(String input) {

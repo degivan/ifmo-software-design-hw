@@ -28,6 +28,30 @@ public class TokenizerTest {
     }
 
     @Test
+    public void testNegativeStart() {
+        Tokenizer tokenizer = new Tokenizer();
+        List<Token> tokens = tokenizer.tokenize("-12+15");
+        assertTrue(tokens.size() == 3);
+        assertTrue(tokens.get(0) instanceof NumberToken);
+        assertTrue(tokens.get(1) instanceof Operation);
+        assertTrue(tokens.get(2) instanceof NumberToken);
+    }
+
+    @Test
+    public void testNegativeBrace() {
+        Tokenizer tokenizer = new Tokenizer();
+        List<Token> tokens = tokenizer.tokenize("3*(-12+2)");
+        assertTrue(tokens.size() == 7);
+        assertTrue(tokens.get(0) instanceof NumberToken);
+        assertTrue(tokens.get(1) instanceof Operation);
+        assertTrue(tokens.get(2) instanceof Brace);
+        assertTrue(tokens.get(3) instanceof NumberToken);
+        assertTrue(tokens.get(4) instanceof Operation);
+        assertTrue(tokens.get(5) instanceof NumberToken);
+        assertTrue(tokens.get(6) instanceof Brace);
+    }
+
+    @Test
     public void testBraces() {
         Tokenizer tokenizer = new Tokenizer();
         List<Token> tokens = tokenizer.tokenize("(12+15)*3");

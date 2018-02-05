@@ -25,8 +25,8 @@ public class StatisticServiceTest {
         StatisticService statisticService = new StatisticServiceImpl(searchService);
 
         String hashTag = "Test";
-        Tweet tweet1 = new Tweet(new DateTime(), "2");
-        Tweet tweet2 = new Tweet(new DateTime().minusHours(2), "1");
+        Tweet tweet1 = new Tweet(new DateTime(), "", "2");
+        Tweet tweet2 = new Tweet(new DateTime().minusHours(2), "", "1");
 
         when(searchService.getTweetsWithHashTag(eq(hashTag), any()))
                 .thenReturn(Arrays.asList(tweet1, tweet2));
@@ -40,9 +40,9 @@ public class StatisticServiceTest {
         StatisticService statisticService = new StatisticServiceImpl(searchService);
 
         String hashTag = "Test";
-        Tweet tweet1 = new Tweet(new DateTime(), "2");
-        Tweet tweet2 = new Tweet(new DateTime().minusHours(1), "1");
-        Tweet tweet3 = new Tweet(new DateTime().minusHours(1), "0");
+        Tweet tweet1 = new Tweet(new DateTime(), "", "2");
+        Tweet tweet2 = new Tweet(new DateTime().minusHours(1), "", "1");
+        Tweet tweet3 = new Tweet(new DateTime().minusHours(1), "", "0");
 
         when(searchService.getTweetsWithHashTag(eq(hashTag), any()))
                 .thenReturn(Arrays.asList(tweet1, tweet2, tweet3));

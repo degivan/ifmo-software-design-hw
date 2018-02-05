@@ -30,7 +30,8 @@ public class TweetParser {
     private Tweet parseJSONTweet(JSONObject jsonObject) throws ParseException {
         Date date = dateFormat.parse(jsonObject.getString("created_at"));
         String id = jsonObject.getString("id_str");
+        String text = jsonObject.getString("text");
 
-        return new Tweet(new DateTime(date), id);
+        return new Tweet(new DateTime(date), text, id);
     }
 }

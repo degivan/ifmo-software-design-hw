@@ -40,7 +40,7 @@ public class SearchServiceTest {
 
     @Test
     public void testGetTweetsWithHashTag() throws ParseException, UnirestException {
-        Tweet tweet1 = new Tweet(new DateTime().minusHours(2), "30");
+        Tweet tweet1 = new Tweet(new DateTime().minusHours(2), "", "30");
         whenHttp(stubServer).match(not(parameter("max_id", "30")))
                 .then(stringContent(TestUtils.convertTweetsToString(tweet1)));
         whenHttp(stubServer).match(parameter("max_id", "30"))

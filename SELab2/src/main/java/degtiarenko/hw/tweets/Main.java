@@ -1,9 +1,10 @@
 package degtiarenko.hw.tweets;
 
-import java.io.InputStream;
-import java.util.Properties;
+import org.joda.time.DateTime;
 
-import static java.lang.System.out;
+import java.io.InputStream;
+import java.util.List;
+import java.util.Properties;
 
 public class Main {
 
@@ -13,9 +14,10 @@ public class Main {
         prop.load(input);
 
         SearchService searchService = new SearchServiceImpl(prop.getProperty("bearer_token"), prop.getProperty("search_url"));
-        StatisticService statisticService = new StatisticServiceImpl(searchService);
+        List<Tweet> angryTweets = searchService.getTweetsWithHashTag("angry", new DateTime().minusDays(5));
 
-        out.println(statisticService.getHashTagPopularity("Yandex", 2));
-        out.println(statisticService.getHashTagPopularity("Yahoo", 5));
+        for(Tweet tweet: angryTweets) {
+            System.out.println(tweet);
+        }
     }
 }

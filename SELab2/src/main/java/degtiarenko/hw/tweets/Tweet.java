@@ -5,10 +5,12 @@ import org.joda.time.DateTime;
 
 public class Tweet {
     private final DateTime date;
+    private final String text;
     private final String id;
 
-    public Tweet(DateTime date, String id) {
+    public Tweet(DateTime date, String text, String id) {
         this.date = date;
+        this.text = text;
         this.id = id;
     }
 
@@ -18,6 +20,10 @@ public class Tweet {
 
     public DateTime getDate() {
         return date;
+    }
+
+    public String getText() {
+        return text;
     }
 
     @Override
@@ -33,5 +39,14 @@ public class Tweet {
     @Override
     public int hashCode() {
         return id != null ? id.hashCode() : 0;
+    }
+
+    @Override
+    public String toString() {
+        return "Tweet{" +
+                "date=" + date +
+                ", text='" + text + '\'' +
+                ", id='" + id + '\'' +
+                '}';
     }
 }

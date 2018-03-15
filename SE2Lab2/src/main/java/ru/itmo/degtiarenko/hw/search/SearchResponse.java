@@ -1,15 +1,18 @@
 package ru.itmo.degtiarenko.hw.search;
 
+import ru.itmo.degtiarenko.hw.search.WebResponse.Source;
+
 import java.util.List;
+import java.util.Map;
 
 public class SearchResponse {
-    private final List<String> results;
+    private final Map<Source, List<String>> results;
 
-    public SearchResponse(List<String> results) {
+    public SearchResponse(Map<Source, List<String>> results) {
         this.results = results;
     }
 
-    public List<String> getResults() {
+    public Map<Source, List<String>> getResults() {
         return results;
     }
 }

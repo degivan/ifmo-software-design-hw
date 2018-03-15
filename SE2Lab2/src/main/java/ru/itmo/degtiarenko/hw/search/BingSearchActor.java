@@ -36,8 +36,11 @@ public class BingSearchActor extends AbstractActor {
     private void processWebRequest(WebRequest request) throws Exception {
         System.out.println("processWebRequest");
         ActorRef master = getSender();
+
         SearchResults searchResults = searchWeb(request.getRequest());
+
         master.tell(WebResponse.from(searchResults), getSelf());
+        context().stop(self());
     }
 
     public static SearchResults searchWeb(String searchQuery) throws Exception {

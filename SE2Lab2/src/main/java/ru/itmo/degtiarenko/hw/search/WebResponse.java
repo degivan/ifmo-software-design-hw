@@ -1,18 +1,40 @@
 package ru.itmo.degtiarenko.hw.search;
 
-public class WebResponse {
-    private final String value;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 
-    public WebResponse(String value) {
-        this.value = value;
+import java.util.ArrayList;
+import java.util.List;
+
+public class WebResponse {
+    private List<String> results;
+
+    public WebResponse(List<String> results) {
+        this.results = results;
     }
+
 
     public static WebResponse from(BingSearchActor.SearchResults searchResults) {
-        String value = searchResults.jsonResponse;
-        return new WebResponse(value);
+        final JsonObject jsonResponse = new JsonParser().parse(searchResults.jsonResponse).getAsJsonObject();
+        List<String> results = getResultsFromJson(jsonResponse);
+        return new WebResponse(results);
     }
 
-    public String getValue() {
-        return value;
+    private static List<String> getResultsFromJson(JsonObject json) {
+        List<String> results = new ArrayList<>();
+        JsonArray array = json.getAsJsonObject("webPages")
+                .getAsJsonArray("value");
+        for (int i = 0; i < array.size(); i++) {
+            JsonObject singleResult = array.get(i).getAsJsonObject();
+            String stringResult = singleResult.get("displayUrl").getAsString();
+            results.add(stringResult);
+        }
+        return results;
+    }
+
+
+    public List<String> getResults() {
+        return results;
     }
 }

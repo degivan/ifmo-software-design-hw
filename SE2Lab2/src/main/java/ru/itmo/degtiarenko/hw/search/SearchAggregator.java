@@ -17,13 +17,12 @@ public class SearchAggregator {
     private static final String EXIT_LINE = "~exit~";
     private static final String SYSTEM_NAME = "system";
     private static final String MASTER_NAME = "master";
-    private static final Timeout TIMEOUT = Timeout.apply(5, TimeUnit.SECONDS);
+    private static final Timeout TIMEOUT = Timeout.apply(60, TimeUnit.SECONDS);
 
     private static ActorSystem actors;
 
     public static void main(String[] args) throws Exception {
         Scanner in = new Scanner(System.in);
-
 
         actors = ActorSystem.create(SYSTEM_NAME);
         while (true) {
@@ -49,6 +48,6 @@ public class SearchAggregator {
     private static String getPrintable(SearchResponse response) {
         return response.getResults()
                 .stream()
-                .collect(Collectors.joining("\n\n"));
+                .collect(Collectors.joining("\n"));
     }
 }

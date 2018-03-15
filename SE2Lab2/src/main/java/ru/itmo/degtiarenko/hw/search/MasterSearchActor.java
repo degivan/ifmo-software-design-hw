@@ -4,7 +4,7 @@ import akka.actor.AbstractActor;
 import akka.actor.ActorRef;
 import akka.actor.Props;
 
-import java.util.Collections;
+import java.util.List;
 
 public class MasterSearchActor extends AbstractActor {
     private static final String BING_NAME = "bing-child";
@@ -19,8 +19,11 @@ public class MasterSearchActor extends AbstractActor {
 
     private void processWebResponse(WebResponse webResponse) {
         System.out.println("processWebResponse");
-        SearchResponse response = new SearchResponse(Collections.singletonList(webResponse.getValue()));
+        List<String> results = webResponse.getResults();
+        SearchResponse response = new SearchResponse(results);
+
         returnPoint.tell(response, getSelf());
+        context().stop(self());
     }
 
     private void processStartRequest(StartRequest startRequest) {

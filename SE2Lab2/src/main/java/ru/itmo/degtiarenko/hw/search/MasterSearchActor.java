@@ -10,9 +10,10 @@ import java.util.List;
 import java.util.Map;
 
 public class MasterSearchActor extends AbstractActor {
+    private static final String GOOGLE_NAME = "google";
     private static final String BING_NAME = "bing-child";
     private static final String DDG_NAME = "ddg";
-    private static final int SOURCE_AMOUNT = 2;
+    private static final int SOURCE_AMOUNT = 3;
 
     private final Map<Source, List<String>> results = new HashMap<>();
     private ActorRef returnPoint;
@@ -43,6 +44,9 @@ public class MasterSearchActor extends AbstractActor {
 
         ActorRef bingChild = context().actorOf(Props.create(BingSearchActor.class), BING_NAME);
         ActorRef ddgChild = context().actorOf(Props.create(DuckDuckGoSearchActor.class), DDG_NAME);
+        ActorRef googleChild = context().actorOf(Props.create(GoogleSearchActor.class), GOOGLE_NAME);
+
+        googleChild.tell(new WebRequest(startRequest.getRequest()), getSelf());
         bingChild.tell(new WebRequest(startRequest.getRequest()), getSelf());
         ddgChild.tell(new WebRequest(startRequest.getRequest()), getSelf());
     }

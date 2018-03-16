@@ -7,6 +7,8 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,12 +19,14 @@ public class WebResponse {
     private final List<String> results;
 
     public WebResponse(Source source, List<String> results) {
+        final int toIndex = MAX_RESULTS < results.size() ? MAX_RESULTS : results.size();
+
+        this.results = results.subList(0, toIndex);
         this.source = source;
-        this.results = results.subList(0, MAX_RESULTS);
     }
 
 
-    public static WebResponse from(BingSearchActor.SearchResults searchResults) {
+    public static WebResponse fromBing(BingSearchActor.SearchResults searchResults) {
         final JsonObject jsonResponse = new JsonParser().parse(searchResults.jsonResponse).getAsJsonObject();
         List<String> results = getResultsFromJson(jsonResponse);
 
@@ -41,7 +45,7 @@ public class WebResponse {
         return results;
     }
 
-    public static WebResponse from(Document document) {
+    public static WebResponse fromDDG(Document document) {
         List<String> results = new ArrayList<>();
         Elements elemResults = document.getElementById("links").getElementsByClass("results_links");
 
@@ -50,6 +54,23 @@ public class WebResponse {
             results.add(title.text() + ", " + title.attr("href"));
         }
         return new WebResponse(Source.DUCKDUCKGO, results);
+    }
+
+    public static WebResponse fromGoogle(Document doc) throws UnsupportedEncodingException {
+        List<String> results = new ArrayList<>();
+
+        Elements links = doc.select(".g>div>.rc>.r>*");
+        for (Element link : links) {
+            String title = link.text();
+            String url = link.absUrl("href");
+            url = URLDecoder.decode(url, "UTF-8");
+
+            if (!url.startsWith("http")) {
+                continue; // Ads/news/etc.
+            }
+            results.add(title + ", " + url);
+        }
+        return new WebResponse(Source.GOOGLE, results);
     }
 
     public List<String> getResults() {

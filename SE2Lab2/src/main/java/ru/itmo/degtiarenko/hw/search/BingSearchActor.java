@@ -39,7 +39,7 @@ public class BingSearchActor extends AbstractActor {
 
         SearchResults searchResults = searchWeb(request.getRequest());
 
-        master.tell(WebResponse.from(searchResults), getSelf());
+        master.tell(WebResponse.fromBing(searchResults), getSelf());
         context().stop(self());
     }
 

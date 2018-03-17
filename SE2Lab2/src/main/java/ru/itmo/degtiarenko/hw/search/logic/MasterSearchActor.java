@@ -33,8 +33,6 @@ public class MasterSearchActor extends AbstractActor {
     }
 
     private void processWebResponse(WebResponse webResponse) {
-        System.out.println("processWebResponse");
-
         results.put(webResponse.getSource(), webResponse.getResults());
 
         if (results.size() == SOURCE_AMOUNT) {
@@ -46,7 +44,6 @@ public class MasterSearchActor extends AbstractActor {
     }
 
     private void processStartRequest(StartRequest startRequest) {
-        System.out.println("processStartRequest");
         returnPoint = getSender();
 
         for (Map.Entry<String, Class<?>> e: searchClasses.entrySet()) {

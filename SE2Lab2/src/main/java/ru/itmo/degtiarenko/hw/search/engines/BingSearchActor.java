@@ -18,7 +18,6 @@ public class BingSearchActor extends SearchEngineActor {
 
     @Override
     protected void processWebRequest(WebRequest request) throws Exception {
-        System.out.println("processWebRequest");
         ActorRef master = getSender();
 
         SearchResults searchResults = searchWeb(request.getRequest());
@@ -50,7 +49,6 @@ public class BingSearchActor extends SearchEngineActor {
         }
 
         stream.close();
-        System.out.println("searchWebOver");
         return results;
     }
 

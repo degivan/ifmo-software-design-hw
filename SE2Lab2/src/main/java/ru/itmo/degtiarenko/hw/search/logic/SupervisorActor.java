@@ -40,7 +40,7 @@ public class SupervisorActor extends AbstractActor {
     }
 
     private void processSearchResponse(SearchResponse searchResponse) {
-        System.out.print(getPrintable(searchResponse));
+        System.out.println(getPrintable(searchResponse));
     }
 
     private static String getPrintable(SearchResponse response) {

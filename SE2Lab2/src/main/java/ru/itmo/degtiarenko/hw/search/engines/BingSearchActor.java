@@ -1,24 +1,23 @@
 package ru.itmo.degtiarenko.hw.search.engines;
 
-import java.net.*;
-import java.util.*;
-import java.io.*;
-import javax.net.ssl.HttpsURLConnection;
-
-import akka.actor.AbstractActor;
 import akka.actor.ActorRef;
 
-public class BingSearchActor extends AbstractActor {
+import javax.net.ssl.HttpsURLConnection;
+import java.io.InputStream;
+import java.net.URL;
+import java.net.URLEncoder;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Scanner;
+
+public class BingSearchActor extends SearchEngineActor {
     private static final String API_KEY = "78e2dae32dac449e952d11a3eba04f0c";
     private static final String HOST = "https://api.cognitive.microsoft.com";
     private static final String PATH = "/bing/v7.0/search";
 
-    public Receive createReceive() {
-        return receiveBuilder().match(WebRequest.class, this::processWebRequest)
-                .matchAny(this::unhandled).build();
-    }
-
-    private void processWebRequest(WebRequest request) throws Exception {
+    @Override
+    protected void processWebRequest(WebRequest request) throws Exception {
         System.out.println("processWebRequest");
         ActorRef master = getSender();
 

@@ -10,8 +10,10 @@ public class SearchAggregator {
 
     public static void main(String[] args) throws Exception {
         ActorSystem actors = ActorSystem.create(SYSTEM_NAME);
-        ActorRef supervisor = actors.actorOf(Props.create(SupervisorActor.class), SUPERVISOR_NAME);
+        Runnable shutdown = actors::terminate;
+        ActorRef supervisor = actors.actorOf(Props.create(SupervisorActor.class, shutdown), SUPERVISOR_NAME);
 
         supervisor.tell(new StartSupervisorMsg(), ActorRef.noSender());
+
     }
 }

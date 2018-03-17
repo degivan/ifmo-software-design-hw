@@ -12,8 +12,10 @@ public class SupervisorActor extends AbstractActor {
     private static final String MASTER_NAME = "master";
     private static final String EXIT_LINE = "~exit~";
     private final Scanner in;
+    private final Runnable shutdown;
 
-    public SupervisorActor() {
+    public SupervisorActor(Runnable shutdown) {
+        this.shutdown = shutdown;
         in = new Scanner(System.in);
     }
 
@@ -29,12 +31,12 @@ public class SupervisorActor extends AbstractActor {
         String request = in.nextLine();
         if (request.equals(EXIT_LINE)) {
             context().stop(getSelf());
+        } else {
+            ActorRef master = context().actorOf(Props.create(MasterSearchActor.class), MASTER_NAME);
+            context().watch(master);
+
+            master.tell(new StartRequest(request), getSelf());
         }
-
-        ActorRef master = context().actorOf(Props.create(MasterSearchActor.class), MASTER_NAME);
-        context().watch(master);
-
-        master.tell(new StartRequest(request), getSelf());
     }
 
     private void processSearchResponse(SearchResponse searchResponse) {
@@ -53,5 +55,6 @@ public class SupervisorActor extends AbstractActor {
     public void postStop() throws Exception {
         super.postStop();
         in.close();
+        shutdown.run();
     }
 }

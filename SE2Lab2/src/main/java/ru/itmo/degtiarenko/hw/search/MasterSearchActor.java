@@ -14,9 +14,15 @@ public class MasterSearchActor extends AbstractActor {
     private static final String BING_NAME = "bing-child";
     private static final String DDG_NAME = "ddg";
     private static final int SOURCE_AMOUNT = 3;
-
+    private static final Map<String, Class<?>> searchClasses = new HashMap<>();
     private final Map<Source, List<String>> results = new HashMap<>();
     private ActorRef returnPoint;
+
+    static {
+        searchClasses.put(BING_NAME, BingSearchActor.class);
+        searchClasses.put(GOOGLE_NAME, GoogleSearchActor.class);
+        searchClasses.put(DDG_NAME, DuckDuckGoSearchActor.class);
+    }
 
     @Override
     public Receive createReceive() {
@@ -42,12 +48,11 @@ public class MasterSearchActor extends AbstractActor {
         System.out.println("processStartRequest");
         returnPoint = getSender();
 
-        ActorRef bingChild = context().actorOf(Props.create(BingSearchActor.class), BING_NAME);
-        ActorRef ddgChild = context().actorOf(Props.create(DuckDuckGoSearchActor.class), DDG_NAME);
-        ActorRef googleChild = context().actorOf(Props.create(GoogleSearchActor.class), GOOGLE_NAME);
-
-        googleChild.tell(new WebRequest(startRequest.getRequest()), getSelf());
-        bingChild.tell(new WebRequest(startRequest.getRequest()), getSelf());
-        ddgChild.tell(new WebRequest(startRequest.getRequest()), getSelf());
+        for (Map.Entry<String, Class<?>> e: searchClasses.entrySet()) {
+            String name = e.getKey();
+            Class<?> actorClass = e.getValue();
+            ActorRef searchChild = context().actorOf(Props.create(actorClass), name);
+            searchChild.tell(new WebRequest(startRequest.getRequest()), getSelf());
+        }
     }
 }

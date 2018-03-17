@@ -5,21 +5,6 @@ import java.util.*;
 import java.io.*;
 import javax.net.ssl.HttpsURLConnection;
 
-/*
- * Gson: https://github.com/google/gson
- * Maven info:
- *     groupId: com.google.code.gson
- *     artifactId: gson
- *     version: 2.8.1
- *
- * Once you have compiled or downloaded gson-2.8.1.jar, assuming you have placed it in the
- * same folder as this file (BingWebSearch.java), you can compile and run this program at
- * the command line as follows.
- *
- * javac BingWebSearch.java -classpath .;gson-2.8.1.jar -encoding UTF-8
- * java -cp .;gson-2.8.1.jar BingWebSearch
- */
-
 import akka.actor.AbstractActor;
 import akka.actor.ActorRef;
 
@@ -43,7 +28,7 @@ public class BingSearchActor extends AbstractActor {
         context().stop(self());
     }
 
-    public static SearchResults searchWeb(String searchQuery) throws Exception {
+    private static SearchResults searchWeb(String searchQuery) throws Exception {
         // construct URL of search request (endpoint + query string)
         URL url = new URL(HOST + PATH + "?q=" + URLEncoder.encode(searchQuery, "UTF-8"));
         HttpsURLConnection connection = (HttpsURLConnection) url.openConnection();

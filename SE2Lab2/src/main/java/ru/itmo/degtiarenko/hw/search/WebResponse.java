@@ -14,6 +14,7 @@ import java.util.List;
 
 public class WebResponse {
     private final static int MAX_RESULTS = 5;
+    private static final String GOOGLE_SELECTOR = ".g>div>.rc>.r>*";
 
     private final Source source;
     private final List<String> results;
@@ -59,7 +60,7 @@ public class WebResponse {
     public static WebResponse fromGoogle(Document doc) throws UnsupportedEncodingException {
         List<String> results = new ArrayList<>();
 
-        Elements links = doc.select(".g>div>.rc>.r>*");
+        Elements links = doc.select(GOOGLE_SELECTOR);
         for (Element link : links) {
             String title = link.text();
             String url = link.absUrl("href");

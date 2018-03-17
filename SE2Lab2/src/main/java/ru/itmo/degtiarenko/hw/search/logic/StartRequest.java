@@ -1,4 +1,4 @@
-package ru.itmo.degtiarenko.hw.search;
+package ru.itmo.degtiarenko.hw.search.logic;
 
 public class StartRequest {
     private final String request;

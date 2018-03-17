@@ -1,4 +1,4 @@
-package ru.itmo.degtiarenko.hw.search;
+package ru.itmo.degtiarenko.hw.search.engines;
 
 import akka.actor.ActorRef;
 import akka.actor.ActorSystem;
@@ -11,9 +11,7 @@ import scala.concurrent.duration.Duration;
 
 import java.util.concurrent.TimeUnit;
 
-import static org.junit.Assert.assertTrue;
-
-public class MasterSearchActorTest {
+public class GoogleSearchActorTest {
     private static ActorSystem system;
 
     @BeforeClass
@@ -28,12 +26,11 @@ public class MasterSearchActorTest {
     }
 
     @Test
-    public void testMaster() {
+    public void testSearch() {
         new TestKit(system) {{
-            ActorRef actorRef = system.actorOf(Props.create(MasterSearchActor.class), "master");
-            actorRef.tell(new StartRequest("test"), testActor());
-            SearchResponse response = expectMsgClass(Duration.apply(30,TimeUnit.SECONDS), SearchResponse.class);
-            assertTrue(response.getResults().size() == 3);
+            ActorRef actorRef = system.actorOf(Props.create(GoogleSearchActor.class), "google");
+            actorRef.tell(new WebRequest("test"), testActor());
+            expectMsgClass(Duration.apply(30,TimeUnit.SECONDS), WebResponse.class);
         }};
     }
 }

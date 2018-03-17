@@ -3,6 +3,8 @@ package ru.itmo.degtiarenko.hw.search;
 import akka.actor.ActorRef;
 import akka.actor.ActorSystem;
 import akka.actor.Props;
+import ru.itmo.degtiarenko.hw.search.logic.StartSupervisorMsg;
+import ru.itmo.degtiarenko.hw.search.logic.SupervisorActor;
 
 public class SearchAggregator {
     private static final String SYSTEM_NAME = "system";

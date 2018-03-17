@@ -1,4 +1,4 @@
-package ru.itmo.degtiarenko.hw.search;
+package ru.itmo.degtiarenko.hw.search.logic;
 
 import ru.itmo.degtiarenko.hw.search.engines.WebResponse.Source;
 

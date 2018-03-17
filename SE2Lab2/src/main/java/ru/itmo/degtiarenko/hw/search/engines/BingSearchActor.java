@@ -1,4 +1,4 @@
-package ru.itmo.degtiarenko.hw.search;
+package ru.itmo.degtiarenko.hw.search.engines;
 
 import java.net.*;
 import java.util.*;

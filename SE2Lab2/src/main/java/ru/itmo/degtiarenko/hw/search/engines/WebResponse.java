@@ -1,4 +1,4 @@
-package ru.itmo.degtiarenko.hw.search;
+package ru.itmo.degtiarenko.hw.search.engines;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;

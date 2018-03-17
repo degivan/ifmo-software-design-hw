@@ -3,7 +3,8 @@ package ru.itmo.degtiarenko.hw.search;
 import akka.actor.AbstractActor;
 import akka.actor.ActorRef;
 import akka.actor.Props;
-import ru.itmo.degtiarenko.hw.search.WebResponse.Source;
+import ru.itmo.degtiarenko.hw.search.engines.*;
+import ru.itmo.degtiarenko.hw.search.engines.WebResponse.Source;
 
 import java.util.HashMap;
 import java.util.List;

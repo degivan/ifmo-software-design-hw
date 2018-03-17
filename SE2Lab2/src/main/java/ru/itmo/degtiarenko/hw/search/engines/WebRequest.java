@@ -1,4 +1,4 @@
-package ru.itmo.degtiarenko.hw.search;
+package ru.itmo.degtiarenko.hw.search.engines;
 
 public class WebRequest {
     private final String request;

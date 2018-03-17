@@ -1,4 +1,4 @@
-package ru.itmo.degtiarenko.hw.search;
+package ru.itmo.degtiarenko.hw.search.engines;
 
 import akka.actor.AbstractActor;
 import org.jsoup.Jsoup;

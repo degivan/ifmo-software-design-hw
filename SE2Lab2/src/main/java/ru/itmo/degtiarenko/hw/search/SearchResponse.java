@@ -1,6 +1,6 @@
 package ru.itmo.degtiarenko.hw.search;
 
-import ru.itmo.degtiarenko.hw.search.WebResponse.Source;
+import ru.itmo.degtiarenko.hw.search.engines.WebResponse.Source;
 
 import java.util.List;
 import java.util.Map;

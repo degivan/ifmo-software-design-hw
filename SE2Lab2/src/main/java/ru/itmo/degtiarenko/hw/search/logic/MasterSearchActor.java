@@ -3,12 +3,15 @@ package ru.itmo.degtiarenko.hw.search.logic;
 import akka.actor.AbstractActor;
 import akka.actor.ActorRef;
 import akka.actor.Props;
+import akka.actor.ReceiveTimeout;
 import ru.itmo.degtiarenko.hw.search.engines.*;
 import ru.itmo.degtiarenko.hw.search.engines.WebResponse.Source;
+import scala.concurrent.duration.Duration;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 public class MasterSearchActor extends AbstractActor {
     private static final String GOOGLE_NAME = "google";
@@ -29,7 +32,13 @@ public class MasterSearchActor extends AbstractActor {
     public Receive createReceive() {
         return receiveBuilder().match(StartRequest.class, this::processStartRequest)
                 .match(WebResponse.class, this::processWebResponse)
+                .match(ReceiveTimeout.class, this::procesReceiveTimeout)
                 .matchAny(this::unhandled).build();
+    }
+
+    private void procesReceiveTimeout(ReceiveTimeout timeout) {
+        returnPoint.tell(new SearchResponse(results), getSelf());
+        context().stop(self());
     }
 
     private void processWebResponse(WebResponse webResponse) {
@@ -52,5 +61,6 @@ public class MasterSearchActor extends AbstractActor {
             ActorRef searchChild = context().actorOf(Props.create(actorClass), name);
             searchChild.tell(new WebRequest(startRequest.getRequest()), getSelf());
         }
+        context().setReceiveTimeout(Duration.apply(30L, TimeUnit.SECONDS));
     }
 }

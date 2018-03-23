@@ -12,6 +12,6 @@ public class CheckStatic {
         Methods.sleepCall(1.0);
         Methods.sleepCall(2.0);
 
-        Profiler.getInstance().printStats();
+        Profiler.getInstance().printStats(System.out);
     }
 }

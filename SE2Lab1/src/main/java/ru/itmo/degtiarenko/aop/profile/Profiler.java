@@ -1,5 +1,6 @@
 package ru.itmo.degtiarenko.aop.profile;
 
+import java.io.PrintStream;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -30,7 +31,7 @@ public class Profiler {
         stats.add(execTime);
     }
 
-    public void printStats() {
+    public void printStats(PrintStream out) {
         for (Map.Entry<String, Stats> kv : methodStatistics.entrySet()) {
             StringBuilder sb = new StringBuilder();
             sb.append(kv.getKey());
@@ -40,7 +41,7 @@ public class Profiler {
             sb.append(kv.getValue().avg());
             sb.append(", ");
             sb.append(kv.getValue().max());
-            System.out.println(sb.toString());
+            out.println(sb.toString());
         }
     }
 

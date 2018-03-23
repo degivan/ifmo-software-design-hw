@@ -12,6 +12,6 @@ public class CheckNonStatic {
         new Methods().sleepCall(1.0);
         new Methods().sleepCall(2.0);
 
-        Profiler.getInstance().printStats();
+        Profiler.getInstance().printStats(System.out);
     }
 }

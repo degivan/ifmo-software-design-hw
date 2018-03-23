@@ -32,7 +32,7 @@ public class ProductController {
     @PostMapping("/products")
     public Mono<Product> createProduct(@Valid @RequestBody Product product, @RequestParam String id) {
         return productRepository
-                .existsById(product.getId())
+                .existsById(product.getName())
                 .flatMap(alreadyExists -> {
                     if (alreadyExists) {
                         throw new AlreadyExistsException();

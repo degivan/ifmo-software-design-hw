@@ -1,6 +1,8 @@
 package ru.itmo.degtiarenko.react.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -25,5 +27,10 @@ public class RegisterController {
                     }
                     return userRepository.save(user);
                 });
+    }
+
+    @ExceptionHandler(AlreadyExistsException.class)
+    public ResponseEntity handleAlreadyExistsException(AlreadyExistsException ex) {
+        return ResponseEntity.badRequest().build();
     }
 }

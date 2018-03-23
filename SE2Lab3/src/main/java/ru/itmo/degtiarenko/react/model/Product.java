@@ -8,24 +8,11 @@ import javax.validation.constraints.NotBlank;
 @Document(collection = "products")
 public class Product {
     @Id
-    private String id;
-
-    @NotBlank
     private String name;
 
     private Double price;
 
-    public Product() {
-
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
+    public Product() { }
 
     public String getName() {
         return name;

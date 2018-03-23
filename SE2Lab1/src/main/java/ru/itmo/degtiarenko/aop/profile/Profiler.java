@@ -1,4 +1,4 @@
-package ru.itmo.degtiarenko.aop;
+package ru.itmo.degtiarenko.aop.profile;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -8,12 +8,20 @@ import java.util.Set;
 public class Profiler {
     private static final Profiler PROFILER = new Profiler();
     private final Map<String, Stats> methodStatistics = new HashMap<>();
+    private static String packageName = "";
 
-    private Profiler() {
-    }
+    private Profiler() { }
 
     public static Profiler getInstance() {
         return PROFILER;
+    }
+
+    public static String getPackageName() {
+        return packageName;
+    }
+
+    public static void setPackageName(String packageName) {
+        Profiler.packageName = packageName;
     }
 
     public void methodCalled(String methodName, long execTime) {
